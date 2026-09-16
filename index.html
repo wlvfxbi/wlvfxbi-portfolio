@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fabi — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Poppins:wght@400;500;600;700&family=Caveat:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFDF8;
+    --pink:#FFCBE5;
+    --pink-deep:#FF8FC7;
+    --lilac:#DFD3FF;
+    --mint:#C3F2E3;
+    --butter:#FFF0A8;
+    --sky:#CFE8FF;
+    --ink:#463447;
+    --ink-soft:#8F7F92;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Poppins', sans-serif;
+    overflow-x:hidden;
+    position:relative;
+  }
+  ::selection{ background:var(--pink-deep); color:#fff; }
+  .display{ font-family:'Cherry Bomb One', system-ui, sans-serif; }
+  .hand{ font-family:'Caveat', cursive; }
+  .mono{ font-family:'Space Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  section{ scroll-margin-top:30px; position:relative; }
+
+  /* floating doodles */
+  .doodle{
+    position:absolute; opacity:0.5; pointer-events:none;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(-14px) rotate(8deg); }
+  }
+  @media (prefers-reduced-motion: reduce){ .doodle{ animation:none; } }
+
+  /* washi tape */
+  .washi{
+    position:absolute; width:70px; height:22px; top:-12px; left:50%;
+    transform:translateX(-50%) rotate(-4deg);
+    background:repeating-linear-gradient(45deg, var(--pink), var(--pink) 6px, #fff 6px, #fff 12px);
+    opacity:0.9; border-radius:2px;
+    box-shadow:0 2px 4px rgba(70,52,71,0.12);
+  }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 6vw;
+    background:rgba(255,253,248,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:2px dashed var(--pink);
+  }
+  nav .logo{ font-size:22px; color:var(--pink-deep); }
+  nav .links{ display:none; gap:18px; font-size:14px; font-weight:600; }
+  nav .links a{ padding:6px 12px; border-radius:20px; transition:background 0.2s; }
+  nav .links a:hover{ background:var(--pink); }
+  @media(min-width:720px){ nav .links{ display:flex; } }
+
+  /* ---------- Hero ---------- */
+  #hero{
+    min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:140px 6vw 80px;
+    background:
+      radial-gradient(circle at 15% 20%, var(--sky) 0%, transparent 40%),
+      radial-gradient(circle at 85% 15%, var(--pink) 0%, transparent 38%),
+      radial-gradient(circle at 50% 90%, var(--butter) 0%, transparent 45%),
+      radial-gradient(circle at 80% 80%, var(--lilac) 0%, transparent 40%);
+  }
+  .rec-badge{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--card); color:var(--ink-soft);
+    padding:9px 18px; border-radius:100px; transform:rotate(-2deg);
+    box-shadow:0 3px 8px rgba(70,52,71,0.12);
+    margin-bottom:26px; font-size:13px; font-weight:600;
+    border:1.5px solid var(--pink);
+  }
+  .rec-dot{
+    width:8px; height:8px; border-radius:50%; background:var(--pink-deep);
+    animation:blink 1.6s infinite;
+  }
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+  .rec-badge .tc{ color:var(--ink); letter-spacing:0.02em; }
+
+  h1.name{
+    font-size:clamp(58px, 15vw, 150px);
+    color:var(--pink-deep);
+    line-height:1;
+    -webkit-text-stroke:2px var(--ink);
+    text-shadow:4px 4px 0 var(--lilac), 8px 8px 0 var(--sky);
+    margin-bottom:22px;
+  }
+  .role-line{
+    font-size:clamp(15px, 2.2vw, 20px);
+    color:var(--ink-soft); max-width:540px; line-height:1.7; font-weight:500;
+  }
+  .role-line b{ color:var(--ink); font-weight:600; }
+  .hero-tags{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:32px;
+  }
+  .pill{
+    font-size:13px; font-weight:600; padding:9px 16px; border-radius:100px;
+    background:var(--card); border:2px solid var(--pink);
+    box-shadow:0 3px 0 var(--pink);
+  }
+
+  /* ---------- Section heads ---------- */
+  .sec-head{
+    text-align:center; padding:70px 6vw 20px;
+  }
+  .sec-head .kicker{
+    font-family:'Caveat', cursive; font-size:22px; color:var(--pink-deep); font-weight:600;
+  }
+  .sec-head h2{
+    font-family:'Cherry Bomb One', sans-serif; font-size:clamp(30px,5vw,54px);
+    color:var(--ink);
+  }
+
+  /* ---------- Proyectos (photocards) ---------- */
+  #proyectos{ padding-bottom:80px; }
+  .photo-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:34px; max-width:1100px; margin:40px auto 0; padding:0 6vw;
+  }
+  .polaroid{
+    position:relative; background:var(--card); border-radius:16px;
+    padding:14px 14px 20px; box-shadow:0 10px 22px rgba(70,52,71,0.12);
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .polaroid:nth-child(1){ transform:rotate(-3deg); }
+  .polaroid:nth-child(2){ transform:rotate(2deg); }
+  .polaroid:nth-child(3){ transform:rotate(-1.5deg); }
+  .polaroid:hover{ transform:rotate(0deg) translateY(-8px); box-shadow:0 16px 30px rgba(70,52,71,0.18); }
+  .photo-area{
+    height:170px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+    font-size:44px; margin-bottom:16px;
+  }
+  .polaroid h3{ font-family:'Cherry Bomb One', sans-serif; font-size:22px; margin-bottom:8px; color:var(--ink); }
+  .polaroid p{ font-size:13.5px; color:var(--ink-soft); line-height:1.6; }
+  .polaroid .badge{
+    display:inline-block; margin-top:6px; font-size:11px; font-weight:600;
+    padding:3px 10px; border-radius:100px; color:#fff;
+  }
+  .edit-note{ font-family:'Caveat', cursive; font-size:15px; color:var(--pink-deep); margin-top:10px; }
+
+  /* ---------- Sobre mi (diary) ---------- */
+  #sobremi{
+    background:linear-gradient(var(--lilac) 0 1px, transparent 1px) 0 0/100% 34px, var(--card);
+    margin:0 6vw; border-radius:24px; padding:60px 6vw; position:relative;
+    box-shadow:0 8px 26px rgba(70,52,71,0.08);
+    border:2px dashed var(--lilac);
+  }
+  .bio-wrap{ display:grid; grid-template-columns:1fr; gap:40px; max-width:1000px; margin:0 auto; }
+  @media(min-width:800px){ .bio-wrap{ grid-template-columns:1.3fr 1fr; } }
+  .bio-text p{ font-size:16.5px; line-height:1.9; margin-bottom:14px; }
+  .bio-text .hl{ color:var(--pink-deep); font-weight:600; }
+  .sticker-list{ display:flex; flex-wrap:wrap; gap:10px; align-content:flex-start; }
+  .sticker{
+    font-size:13px; font-weight:600; padding:10px 14px; border-radius:14px;
+    box-shadow:0 3px 0 rgba(70,52,71,0.15);
+  }
+
+  /* ---------- Herramientas (sticker sheet) ---------- */
+  #herramientas{ padding-bottom:90px; }
+  .sticker-sheet{
+    display:flex; flex-wrap:wrap; gap:18px; justify-content:center; max-width:900px; margin:40px auto 0; padding:0 6vw;
+  }
+  .tool-sticker{
+    width:120px; height:120px; border-radius:50%; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:10px;
+    border:3px solid var(--card); box-shadow:0 6px 14px rgba(70,52,71,0.15);
+    font-weight:600; font-size:13px; transition:transform 0.25s ease;
+  }
+  .tool-sticker:hover{ transform:rotate(-6deg) scale(1.06); }
+  .tool-sticker .lvl{ font-family:'Caveat', cursive; font-size:14px; margin-top:4px; font-weight:600; }
+
+  /* ---------- Contacto ---------- */
+  #contacto{
+    margin:0 6vw 60px; padding:60px 6vw; border-radius:24px; text-align:center;
+    background:linear-gradient(135deg, var(--pink) 0%, var(--lilac) 50%, var(--sky) 100%);
+    position:relative; overflow:hidden;
+  }
+  #contacto h2{ font-family:'Cherry Bomb One', sans-serif; font-size:clamp(32px,6vw,58px); color:#fff;
+    text-shadow:3px 3px 0 rgba(70,52,71,0.25); margin-bottom:14px; }
+  #contacto p.lead{ color:#fff; max-width:46ch; margin:0 auto 30px; font-weight:500; opacity:0.95; }
+  .contact-links{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+  .contact-links a{
+    font-weight:600; font-size:14px; padding:12px 20px; border-radius:100px;
+    background:#fff; color:var(--pink-deep);
+    box-shadow:0 4px 0 rgba(70,52,71,0.2);
+    transition:transform 0.2s ease;
+  }
+  .contact-links a:hover{ transform:translateY(-3px); }
+
+  footer{
+    text-align:center; padding:30px 6vw 50px; font-family:'Caveat', cursive;
+    font-size:16px; color:var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo display">fabi</span>
+  <div class="links">
+    <a href="#proyectos">proyectos</a>
+    <a href="#sobremi">sobre mí</a>
+    <a href="#herramientas">herramientas</a>
+    <a href="#contacto">contacto</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <span class="doodle" style="top:18%; left:10%; font-size:30px;">✦</span>
+  <span class="doodle" style="top:70%; right:14%; font-size:22px; animation-delay:1.5s;">✧</span>
+
+  <div class="rec-badge">
+    <span class="rec-dot" aria-hidden="true"></span>
+    <span>portafolio en vivo</span>
+    <span class="tc mono" id="timecode">00:00:00</span>
+  </div>
+  <h1 class="name display">fabi</h1>
+  <p class="role-line">Estudiante de <b>Comunicación y Medios Audiovisuales</b> en la UPN. Construyo mi perfil entre el set, la sala de edición y la creación de contenido para redes.</p>
+  <div class="hero-tags">
+    <span class="pill">Set: luz, sonido y script</span>
+    <span class="pill">Postproducción de sonido</span>
+    <span class="pill">Contenido y locución</span>
+  </div>
+</section>
+
+<section id="proyectos">
+  <div class="sec-head">
+    <div class="kicker">trabajo reciente</div>
+    <h2>proyectos</h2>
+  </div>
+  <div class="photo-grid">
+
+    <div class="polaroid">
+      <div class="washi"></div>
+      <div class="photo-area" style="background:linear-gradient(135deg, var(--sky), var(--lilac));">🎬</div>
+      <h3>bESIfest</h3>
+      <span class="badge" style="background:var(--pink-deep);">proyecto académico · NORU</span>
+      <p style="margin-top:10px;">Producción realizada con el colectivo NORU. [reemplaza con tu rol: cámara, sonido, dirección...]</p>
+      <div class="edit-note">✎ agrega tu rol y una breve descripción</div>
+    </div>
+
+    <div class="polaroid">
+      <div class="washi" style="background:repeating-linear-gradient(45deg, var(--mint), var(--mint) 6px, #fff 6px, #fff 12px);"></div>
+      <div class="photo-area" style="background:linear-gradient(135deg, var(--mint), var(--butter));">☕</div>
+      <h3>Nescafé</h3>
+      <span class="badge" style="background:#3FBE96;">campaña transmedia · NORU</span>
+      <p style="margin-top:10px;">Campaña transmedia desarrollada con NORU. [reemplaza con tu rol y las piezas producidas]</p>
+      <div class="edit-note">✎ agrega tu rol y una breve descripción</div>
+    </div>
+
+    <div class="polaroid">
+      <div class="washi" style="background:repeating-linear-gradient(45deg, var(--butter), var(--butter) 6px, #fff 6px, #fff 12px);"></div>
+      <div class="photo-area" style="background:linear-gradient(135deg, var(--pink), var(--sky));">🗳️</div>
+      <h3>Demogracia</h3>
+      <span class="badge" style="background:#E0A400;">proyecto académico · NORU</span>
+      <p style="margin-top:10px;">Producción realizada junto a NORU. [reemplaza con tu rol y de qué trata el proyecto]</p>
+      <div class="edit-note">✎ agrega tu rol y una breve descripción</div>
+    </div>
+
+  </div>
+</section>
+
+<section id="sobremi">
+  <div class="sec-head" style="padding-top:0;">
+    <div class="kicker">conóceme</div>
+    <h2>sobre mí</h2>
+  </div>
+  <div class="bio-wrap">
+    <div class="bio-text">
+      <p>Estudio <span class="hl">Comunicación y Medios Audiovisuales</span> en la Universidad Privada del Norte, construyendo mi perfil entre dos mundos: el <span class="hl">set de grabación</span> y la <span class="hl">sala de edición</span>.</p>
+      <p>Me interesa el trabajo en producción —iluminación, sonido, script supervision, asistencia de dirección— tanto como la edición de sonido en postproducción y la creación de contenido para redes, incluyendo locución.</p>
+      <p>A mediano plazo, quiero especializarme en <span class="hl">ingeniería de sonido</span>.</p>
+    </div>
+    <div class="sticker-list">
+      <span class="sticker" style="background:var(--pink);">Iluminación</span>
+      <span class="sticker" style="background:var(--mint);">Sonido en set</span>
+      <span class="sticker" style="background:var(--butter);">Script supervisor</span>
+      <span class="sticker" style="background:var(--sky);">Asistencia de dirección</span>
+      <span class="sticker" style="background:var(--lilac);">Edición de sonido</span>
+      <span class="sticker" style="background:var(--pink);">Contenido y locución</span>
+    </div>
+  </div>
+</section>
+
+<section id="herramientas">
+  <div class="sec-head">
+    <div class="kicker">lo que uso</div>
+    <h2>herramientas</h2>
+  </div>
+  <div class="sticker-sheet">
+    <div class="tool-sticker" style="background:var(--pink);">Premiere<span class="lvl">Nivel avanzado</span></div>
+    <div class="tool-sticker" style="background:var(--mint);">Audition<span class="lvl">Nivel avanzado</span></div>
+    <div class="tool-sticker" style="background:var(--lilac);">Pro Tools<span class="lvl">En aprendizaje</span></div>
+    <div class="tool-sticker" style="background:var(--butter);">CapCut<span class="lvl">Manejo fluido</span></div>
+    <div class="tool-sticker" style="background:var(--sky);">Illustrator<span class="lvl">Nivel básico</span></div>
+    <div class="tool-sticker" style="background:var(--pink);">Photoshop<span class="lvl">En práctica</span></div>
+  </div>
+</section>
+
+<section id="contacto">
+  <span class="doodle" style="top:10%; left:8%; font-size:22px;">✦</span>
+  <span class="doodle" style="bottom:10%; right:10%; font-size:22px; animation-delay:1.2s;">✧</span>
+  <h2>hablemos</h2>
+  <p class="lead">Estoy abierta a colaborar en producción, set y postproducción de sonido. Escríbeme.</p>
+  <div class="contact-links">
+    <a href="mailto:tú@email.com">Correo</a>
+    <a href="#">Instagram</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</section>
+
+<footer>fabi — portafolio <span id="year"></span></footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const start = Date.now();
+  const tc = document.getElementById('timecode');
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function tick(){
+    const elapsed = Math.floor((Date.now() - start) / 1000);
+    const h = Math.floor(elapsed / 3600);
+    const m = Math.floor((elapsed % 3600) / 60);
+    const s = elapsed % 60;
+    tc.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+</script>
+
+</body>
+</html>
