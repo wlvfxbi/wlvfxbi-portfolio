@@ -1,849 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>fabi — portafolio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg: #1E0E07;
-    --bg-2: #2A130A;
-    --terracotta: #C4512D;
-    --orange: #E8752E;
-    --amber: #F2A93B;
-    --lemon: #F5E6A8;
-    --cream: #FBF3E4;
-    --paper: #F7ECDA;
-    --paper-2: #EFE0C6;
-    --olive: #6B7A3A;
-    --sage: #A8B07C;
-    --wine: #7A1F1F;
-    --rust: #A03A20;
-    --ink: #2A130A;
-    --ink-soft: #7A5A48;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    background: var(--bg);
-    background-image:
-      radial-gradient(ellipse 70% 50% at 15% 0%, rgba(232,117,46,0.35) 0%, transparent 60%),
-      radial-gradient(ellipse 55% 55% at 85% 15%, rgba(196,81,45,0.30) 0%, transparent 55%),
-      radial-gradient(ellipse 90% 60% at 50% 100%, rgba(122,31,31,0.45) 0%, transparent 65%);
-    background-attachment: fixed;
-    color: var(--cream);
-    font-family: 'Manrope', sans-serif;
-    font-weight: 400;
-    overflow-x: hidden;
-    position: relative;
-    line-height: 1.6;
-  }
-  body::before{
-    content:'';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    opacity: 0.07; pointer-events: none; z-index: 1; mix-blend-mode: overlay;
-  }
-  ::selection{ background: var(--amber); color: var(--ink); }
-  a{ color: inherit; text-decoration: none; }
-  button{ font-family: inherit; cursor: pointer; }
-  .display{
-    font-family:'Fraunces', serif;
-    font-weight: 900;
-    font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 1;
-    letter-spacing: -0.03em;
-    line-height: 0.9;
-  }
-
-  /* ---------- Nav ---------- */
-  nav{
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 6vw;
-    background: rgba(30, 14, 7, 0.65);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(242, 169, 59, 0.15);
-  }
-  nav .logo{
-    font-family: 'Fraunces', serif;
-    font-weight: 900;
-    font-size: 24px;
-    color: var(--cream);
-    letter-spacing: -0.03em;
-  }
-  nav .logo span{ color: var(--amber); }
-  nav .links{ display: flex; gap: 4px; font-size: 13.5px; font-weight: 500; }
-  nav .links a{
-    padding: 7px 14px; border-radius: 100px;
-    color: rgba(251, 243, 228, 0.75);
-    transition: all 0.2s;
-  }
-  nav .links a:hover{ background: rgba(242, 169, 59, 0.15); color: var(--cream); }
-  nav .links a .sep{ color: var(--amber); opacity: 0.4; margin: 0 4px; }
-
-  /* ---------- Views ---------- */
-  .view{ display: none; position: relative; z-index: 2; }
-  .view.active{ display: block; animation: fadeIn 0.35s ease; }
-  .view:not(#view-inicio){ padding-top: 40px; }
-  @keyframes fadeIn{
-    from{ opacity: 0; transform: translateY(10px); }
-    to{ opacity: 1; transform: translateY(0); }
-  }
-
-  /* ---------- Hero ---------- */
-  #view-inicio{
-    min-height: 100vh;
-    display: none;
-    flex-direction: column; align-items: center; justify-content: center;
-    text-align: center;
-    padding: 140px 6vw 80px;
-    position: relative;
-    overflow: hidden;
-  }
-  #view-inicio.active{ display: flex; }
-  .sun{
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -55%);
-    width: min(78vw, 780px);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background:
-      radial-gradient(circle, rgba(245, 230, 168, 0.55) 0%, rgba(242, 169, 59, 0.35) 25%, rgba(232, 117, 46, 0.15) 45%, transparent 70%);
-    filter: blur(30px);
-    z-index: 0; pointer-events: none;
-    animation: pulseSun 8s ease-in-out infinite;
-  }
-  @keyframes pulseSun{
-    0%, 100%{ transform: translate(-50%, -55%) scale(1); opacity: 0.9; }
-    50%{ transform: translate(-50%, -55%) scale(1.06); opacity: 1; }
-  }
-  .hero-content{ position: relative; z-index: 2; }
-
-  .hero-kicker{
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 19px;
-    color: var(--amber);
-    margin-bottom: 22px;
-    opacity: 0.9;
-  }
-  .hero-kicker::before, .hero-kicker::after{ content: '·'; color: var(--orange); }
-
-  h1.name{
-    font-family: 'Fraunces', serif;
-    font-weight: 900;
-    font-variation-settings: "opsz" 144, "SOFT" 40, "WONK" 1;
-    font-size: clamp(90px, 24vw, 260px);
-    color: var(--cream);
-    line-height: 0.82;
-    letter-spacing: -0.055em;
-    text-shadow:
-      0 0 90px rgba(242, 169, 59, 0.35),
-      0 0 40px rgba(232, 117, 46, 0.25);
-    margin-bottom: 30px;
-  }
-
-  .role-line{
-    max-width: 560px;
-    margin: 0 auto;
-    font-size: clamp(15px, 2vw, 18px);
-    line-height: 1.75;
-    color: rgba(251, 243, 228, 0.88);
-  }
-  .role-line em{
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    color: var(--amber);
-    font-size: 1.15em;
-    font-weight: 400;
-  }
-  .role-line b{ color: var(--cream); font-weight: 600; }
-
-  .cta-btn{
-    display: inline-flex; align-items: center; gap: 12px;
-    font-family: 'Fraunces', serif;
-    font-weight: 700;
-    font-size: 17px;
-    padding: 16px 34px;
-    border-radius: 100px;
-    background: linear-gradient(135deg, var(--terracotta), var(--orange));
-    color: var(--cream);
-    box-shadow: 0 10px 28px rgba(232, 117, 46, 0.42);
-    transition: all 0.3s ease;
-    margin-top: 44px;
-  }
-  .cta-btn:hover{ transform: translateY(-3px); box-shadow: 0 16px 36px rgba(232, 117, 46, 0.55); }
-  .cta-btn .arrow{ font-size: 20px; transition: transform 0.3s; }
-  .cta-btn:hover .arrow{ transform: translateX(4px); }
-
-  /* ---------- Section heads ---------- */
-  .sec-head{ text-align: center; padding: 80px 6vw 20px; }
-  .sec-head .kicker{
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 22px;
-    color: var(--amber);
-    display: block;
-    margin-bottom: 4px;
-  }
-  .sec-head h2{
-    font-family: 'Fraunces', serif;
-    font-weight: 900;
-    font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 1;
-    font-size: clamp(40px, 7vw, 84px);
-    color: var(--cream);
-    letter-spacing: -0.03em;
-    line-height: 0.95;
-  }
-  .sec-head .lead{
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: clamp(16px, 2vw, 20px);
-    color: rgba(251, 243, 228, 0.7);
-    max-width: 560px;
-    margin: 14px auto 0;
-    line-height: 1.6;
-  }
-
-  /* ---------- Ramas overview ---------- */
-  #ramas{ padding: 40px 0; }
-  .branches{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-    max-width: 1100px;
-    margin: 40px auto 0;
-    padding: 0 6vw;
-  }
-  .branch-card{
-    display: flex; flex-direction: column; gap: 12px;
-    background: rgba(251, 243, 228, 0.05);
-    border: 1px solid rgba(242, 169, 59, 0.18);
-    border-radius: 22px;
-    padding: 26px 24px;
-    transition: all 0.3s ease;
-    text-align: left;
-    color: var(--cream);
-    position: relative;
-    overflow: hidden;
-  }
-  .branch-card:hover{
-    border-color: var(--amber);
-    transform: translateY(-4px);
-    background: rgba(251, 243, 228, 0.08);
-  }
-  .branch-icon{
-    width: 56px; height: 56px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
-    border-radius: 16px;
-    margin-bottom: 6px;
-  }
-  .branch-card h3{
-    font-family: 'Fraunces', serif;
-    font-weight: 700;
-    font-size: 22px;
-    letter-spacing: -0.02em;
-  }
-  .branch-card p{
-    font-size: 14px;
-    color: rgba(251, 243, 228, 0.7);
-    line-height: 1.6;
-  }
-  .branch-card .branch-meta{
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 15px;
-    color: var(--amber);
-    margin-top: 8px;
-  }
-
-  /* ---------- Branch blocks ---------- */
-  .branch-block{ padding-bottom: 40px; }
-
-  .folder-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 26px;
-    max-width: 1100px;
-    margin: 30px auto 0;
-    padding: 0 6vw;
-  }
-  .folder-card{
-    background: none; border: none; padding: 0;
-    display: flex; flex-direction: column; gap: 10px;
-    text-align: left;
-    color: var(--cream);
-  }
-  .folder-cover{
-    position: relative;
-    aspect-ratio: 4/3;
-    border-radius: 18px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 44px;
-    box-shadow: 0 12px 26px rgba(0,0,0,0.35);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .folder-cover::before{
-    content: "";
-    position: absolute; top: -10px; left: 20px;
-    width: 46%; height: 18px;
-    background: inherit;
-    filter: brightness(0.88);
-    border-radius: 8px 8px 0 0;
-  }
-  .folder-card:hover .folder-cover{
-    transform: translateY(-6px) rotate(-1deg);
-    box-shadow: 0 20px 34px rgba(0,0,0,0.45);
-  }
-  .folder-title{
-    font-family: 'Fraunces', serif;
-    font-weight: 700;
-    font-size: 17px;
-    letter-spacing: -0.02em;
-    color: var(--cream);
-  }
-  .folder-count{
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 14px;
-    color: var(--amber);
-    margin-top: -6px;
-    opacity: 0.85;
-  }
-
-  /* ---------- Modal ---------- */
-  .modal-overlay{
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(15, 7, 4, 0.7);
-    backdrop-filter: blur(8px);
-    display: none; align-items: flex-start; justify-content: center;
-    padding: 6vh 5vw; overflow-y: auto;
-  }
-  .modal-overlay.open{ display: flex; }
-  .modal-box{
-    background: var(--paper);
-    color: var(--ink);
-    border-radius: 26px;
-    max-width: 780px; width: 100%;
-    padding: 40px 5vw 46px;
-    position: relative;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-  }
-  .modal-close{
-    position: absolute; top: 18px; right: 18px;
-    width: 38px; height: 38px; border-radius: 50%;
-    background: var(--terracotta); border: none; color: var(--cream);
-    font-size: 17px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    transition: transform 0.2s;
-  }
-  .modal-close:hover{ transform: rotate(90deg); }
-  .modal-back{
-    background: transparent;
-    border: 1px solid var(--terracotta);
-    color: var(--terracotta);
-    font-size: 13px; font-weight: 600;
-    padding: 8px 16px; border-radius: 100px;
-    margin-bottom: 22px;
-    transition: all 0.2s;
-  }
-  .modal-back:hover{ background: var(--terracotta); color: var(--cream); }
-  .modal-kicker{
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 20px;
-    color: var(--terracotta);
-    margin-bottom: 4px;
-  }
-  .modal-title{
-    font-family: 'Fraunces', serif;
-    font-weight: 900;
-    font-size: clamp(26px, 4vw, 40px);
-    color: var(--ink);
-    letter-spacing: -0.03em;
-    line-height: 1;
-    margin-bottom: 24px;
-  }
-
-  .board-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 18px;
-  }
-  .board-item{
-    background: var(--cream);
-    border-radius: 14px; overflow: hidden;
-    text-align: left;
-    border: 1px solid rgba(42, 19, 10, 0.08);
-    box-shadow: 0 6px 16px rgba(42, 19, 10, 0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    padding: 0;
-  }
-  .board-item:hover{ transform: translateY(-4px); box-shadow: 0 14px 24px rgba(42, 19, 10, 0.14); }
-  .board-item-cover{
-    aspect-ratio: 4/3;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 36px;
-  }
-  .board-item-body{ padding: 14px 16px 18px; }
-  .board-item-title{
-    font-family: 'Fraunces', serif;
-    font-weight: 700;
-    font-size: 15.5px;
-    color: var(--ink);
-    letter-spacing: -0.02em;
-    margin-bottom: 6px;
-    line-height: 1.3;
-  }
-  .board-item-badge{
-    display: inline-block;
-    font-size: 10.5px; font-weight: 600;
-    padding: 3px 10px; border-radius: 100px;
-    color: var(--cream);
-  }
-  .board-empty{
-    text-align: center; padding: 40px 10px;
-    color: var(--ink-soft);
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 16px;
-  }
-
-  .detail-media{
-    border-radius: 16px; overflow: hidden;
-    margin-bottom: 22px;
-    box-shadow: 0 12px 26px rgba(42, 19, 10, 0.2);
-  }
-  .detail-video-wrap{ position: relative; width: 100%; padding-top: 56.25%; background: #000; }
-  .detail-video-wrap iframe{ position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .detail-cover-static{
-    aspect-ratio: 16/9;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 60px;
-  }
-  .detail-badge{
-    display: inline-block;
-    font-size: 11.5px; font-weight: 600;
-    padding: 5px 13px; border-radius: 100px;
-    color: var(--cream);
-    margin-bottom: 14px;
-  }
-  .detail-desc{
-    font-size: 15.5px; line-height: 1.75;
-    color: var(--ink);
-    margin-bottom: 16px;
-  }
-  .detail-role{
-    font-size: 14px; color: var(--ink-soft);
-    margin-bottom: 14px; line-height: 1.7;
-  }
-  .detail-role b{ color: var(--terracotta); font-weight: 700; }
-  .detail-rep{
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 17px;
-    color: var(--terracotta);
-    line-height: 1.55;
-    padding: 14px 18px;
-    background: rgba(196, 81, 45, 0.07);
-    border-left: 3px solid var(--terracotta);
-    border-radius: 4px;
-  }
-
-  /* ---------- Sobre mí ---------- */
-  #sobremi-bio{
-    max-width: 1000px;
-    margin: 0 auto;
-    background: var(--paper);
-    color: var(--ink);
-    border-radius: 26px;
-    padding: 56px 6vw;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-    position: relative;
-    background-image: linear-gradient(rgba(42, 19, 10, 0.04) 0 1px, transparent 1px);
-    background-size: 100% 34px;
-  }
-  .bio-wrap{
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  @media(min-width:800px){
-    .bio-wrap{ grid-template-columns: 0.9fr 1.1fr; }
-  }
-
-  /* Fotos bio */
-  .bio-photos{
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 14px;
-    align-items: start;
-  }
-  .photo-frame{
-    background: var(--paper-2);
-    border-radius: 14px;
-    overflow: hidden;
-    aspect-ratio: 4/5;
-    position: relative;
-    box-shadow: 0 8px 20px rgba(42, 19, 10, 0.18);
-    border: 6px solid #fff;
-    transform: rotate(-2deg);
-    transition: transform 0.3s;
-  }
-  .photo-frame:hover{ transform: rotate(0deg) scale(1.02); }
-  .photo-frame.small{
-    aspect-ratio: 3/4;
-    margin-top: 40px;
-    transform: rotate(3deg);
-  }
-  .photo-frame.small:hover{ transform: rotate(0deg) scale(1.02); }
-  .photo-frame img{ width: 100%; height: 100%; object-fit: cover; display: block; }
-  .photo-placeholder{
-    width: 100%; height: 100%;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 6px;
-    background: repeating-linear-gradient(45deg, var(--paper-2), var(--paper-2) 10px, var(--paper) 10px, var(--paper) 20px);
-    color: var(--ink-soft);
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 13px;
-    text-align: center;
-    padding: 12px;
-  }
-  .photo-placeholder .ph-icon{ font-size: 30px; opacity: 0.6; }
-
-  /* Texto bio */
-  .bio-text p{
-    font-size: 16px;
-    line-height: 1.85;
-    margin-bottom: 14px;
-    color: var(--ink);
-    font-family: 'Manrope', sans-serif;
-  }
-  .bio-text .hl{
-    color: var(--terracotta);
-    font-weight: 700;
-  }
-  .bio-text em.signature{
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    color: var(--terracotta);
-    font-size: 1.2em;
-    display: inline-block;
-    margin-top: 6px;
-  }
-
-  .sticker-list{
-    display: flex; flex-wrap: wrap; gap: 10px;
-    align-content: flex-start;
-    margin-top: 26px;
-  }
-  .sticker{
-    font-size: 13px; font-weight: 600;
-    padding: 10px 15px;
-    border-radius: 12px;
-    color: var(--ink);
-    box-shadow: 0 3px 0 rgba(42, 19, 10, 0.2);
-    transition: transform 0.2s;
-  }
-  .sticker:hover{ transform: rotate(-3deg) scale(1.04); }
-
-  /* ---------- Herramientas ---------- */
-  #herramientas{ padding: 40px 0 80px; }
-  .sticker-sheet{
-    display: flex; flex-wrap: wrap; gap: 18px; justify-content: center;
-    max-width: 900px; margin: 40px auto 0; padding: 0 6vw;
-  }
-  .tool-sticker{
-    width: 128px; height: 128px;
-    border-radius: 50%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center;
-    padding: 12px;
-    color: var(--ink);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    font-weight: 700;
-    font-size: 13.5px;
-    transition: transform 0.3s ease;
-    border: 3px solid var(--cream);
-  }
-  .tool-sticker:hover{ transform: rotate(-6deg) scale(1.06); }
-  .tool-sticker .lvl{
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 14px;
-    margin-top: 5px;
-    font-weight: 400;
-    opacity: 0.75;
-  }
-
-  /* ---------- Contacto (dentro de sobremi) ---------- */
-  #contacto-block{
-    margin: 40px 6vw 80px;
-    padding: 80px 6vw;
-    border-radius: 26px;
-    text-align: center;
-    background: linear-gradient(135deg, var(--terracotta) 0%, var(--orange) 45%, var(--amber) 100%);
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-    max-width: 1100px;
-  }
-  @media(min-width:1100px){
-    #contacto-block{ margin-left: auto; margin-right: auto; }
-  }
-  #contacto-block::before{
-    content: '';
-    position: absolute;
-    top: -40%; right: -20%;
-    width: 70%; aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(245, 230, 168, 0.6) 0%, transparent 60%);
-    filter: blur(20px);
-    pointer-events: none;
-  }
-  #contacto-block h2{
-    font-family: 'Fraunces', serif;
-    font-weight: 900;
-    font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 1;
-    font-size: clamp(44px, 8vw, 96px);
-    color: var(--cream);
-    letter-spacing: -0.04em;
-    line-height: 0.95;
-    margin-bottom: 18px;
-    position: relative;
-  }
-  #contacto-block .lead{
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    color: var(--cream);
-    max-width: 44ch;
-    margin: 0 auto 34px;
-    font-size: clamp(16px, 2vw, 20px);
-    opacity: 0.95;
-    position: relative;
-  }
-  .contact-links{ display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; position: relative; }
-  .contact-links a{
-    font-weight: 600; font-size: 14px;
-    padding: 13px 22px;
-    border-radius: 100px;
-    background: var(--cream);
-    color: var(--terracotta);
-    box-shadow: 0 5px 0 rgba(42, 19, 10, 0.25);
-    transition: transform 0.2s ease;
-    display: inline-flex; align-items: center; gap: 8px;
-  }
-  .contact-links a:hover{ transform: translateY(-3px); box-shadow: 0 8px 0 rgba(42, 19, 10, 0.25); }
-
-  footer{
-    text-align: center;
-    padding: 30px 6vw 50px;
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 17px;
-    color: rgba(251, 243, 228, 0.55);
-    position: relative; z-index: 2;
-  }
-</style>
-</head>
-<body>
-
-<nav>
-  <a href="#inicio" class="logo">fabi<span>.</span></a>
-  <div class="links">
-    <a href="#ramas">ramas</a>
-    <a href="#sobremi">sobre mí</a>
-    <a href="#contacto">contacto</a>
-  </div>
-</nav>
-
-<main>
-
-  <!-- ============ VISTA: INICIO ============ -->
-  <section id="view-inicio" class="view active">
-    <div class="sun" aria-hidden="true"></div>
-    <div class="hero-content">
-      <span class="hero-kicker">portafolio · 2025</span>
-      <h1 class="name">fabi</h1>
-      <p class="role-line">
-        Estudiante de <em>Comunicación y Medios Audiovisuales</em> en la UPN.
-        Entre el <b>set</b>, la <b>sala de edición</b> y las <b>redes</b>.
-      </p>
-      <a href="#ramas" class="cta-btn">
-        empezar <span class="arrow">→</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- ============ VISTA: RAMAS ============ -->
-  <section id="view-ramas" class="view">
-    <div class="sec-head">
-      <span class="kicker">por dónde me muevo</span>
-      <h2>ramas</h2>
-      <p class="lead">Tres caminos que crecen del mismo tronco.</p>
-    </div>
-
-    <div class="branches">
-      <a href="#audiovisual" class="branch-card">
-        <div class="branch-icon" style="background:linear-gradient(135deg,var(--terracotta),var(--wine));">🎬</div>
-        <h3>Audiovisual</h3>
-        <p>Producción en set, sonido, edición y postproducción. Mi rama principal.</p>
-        <span class="branch-meta" id="count-audiovisual">06 carpetas</span>
-      </a>
-      <a href="#marketing" class="branch-card">
-        <div class="branch-icon" style="background:linear-gradient(135deg,var(--olive),var(--sage));">📱</div>
-        <h3>Marketing & Redes</h3>
-        <p>Creación de contenido, manejo de redes y campañas publicitarias.</p>
-        <span class="branch-meta" id="count-marketing">02 carpetas</span>
-      </a>
-      <a href="#diseno" class="branch-card">
-        <div class="branch-icon" style="background:linear-gradient(135deg,var(--amber),var(--lemon)); color:var(--ink);">🎨</div>
-        <h3>Diseño</h3>
-        <p>Afiches, posters y diseño gráfico para redes. En crecimiento.</p>
-        <span class="branch-meta" id="count-diseno">02 carpetas</span>
-      </a>
-    </div>
-
-    <!-- AUDIOVISUAL -->
-    <section id="audiovisual" class="branch-block">
-      <div class="sec-head">
-        <span class="kicker">rama 01</span>
-        <h2>audiovisual</h2>
-        <p class="lead">Set, cámara, sonido, edición. Lo que más hago y lo que más me representa.</p>
-      </div>
-      <div class="folder-grid" id="grid-audiovisual"></div>
-    </section>
-
-    <!-- MARKETING -->
-    <section id="marketing" class="branch-block">
-      <div class="sec-head">
-        <span class="kicker">rama 02</span>
-        <h2>marketing & redes</h2>
-        <p class="lead">Crear, narrar y sostener una marca en redes.</p>
-      </div>
-      <div class="folder-grid" id="grid-marketing"></div>
-    </section>
-
-    <!-- DISEÑO -->
-    <section id="diseno" class="branch-block">
-      <div class="sec-head">
-        <span class="kicker">rama 03</span>
-        <h2>diseño</h2>
-        <p class="lead">Afiches y piezas gráficas para redes. Territorio en exploración.</p>
-      </div>
-      <div class="folder-grid" id="grid-diseno"></div>
-    </section>
-  </section>
-
-  <!-- ============ VISTA: SOBRE MÍ ============ -->
-  <section id="view-sobremi" class="view">
-    <div class="sec-head">
-      <span class="kicker">conóceme</span>
-      <h2>sobre mí</h2>
-      <p class="lead">Antes del trabajo, la persona.</p>
-    </div>
-
-    <div style="padding: 20px 6vw 0;">
-      <div id="sobremi-bio">
-        <div class="bio-wrap">
-          <div class="bio-photos">
-            <div class="photo-frame">
-              <!-- 👇 REEMPLAZA este div por: <img src="tu-foto-1.jpg" alt="Fabi"> -->
-              <div class="photo-placeholder">
-                <span class="ph-icon">📷</span>
-                <span>tu foto aquí</span>
-              </div>
-            </div>
-            <div class="photo-frame small">
-              <!-- 👇 REEMPLAZA este div por: <img src="tu-foto-2.jpg" alt="Fabi"> -->
-              <div class="photo-placeholder">
-                <span class="ph-icon">📷</span>
-                <span>otra foto</span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div class="bio-text">
-              <p>Nací en <span class="hl">Italia</span>, crecí en Perú. Estudio <span class="hl">Comunicación y Medios Audiovisuales</span> en la Universidad Privada del Norte, y construyo mi perfil entre el <span class="hl">set de grabación</span> y la <span class="hl">sala de edición</span>.</p>
-              <p>Me interesa el trabajo en producción —iluminación, sonido, script supervision, asistencia de dirección— tanto como la <span class="hl">edición de sonido</span> y la creación de contenido para redes, incluyendo locución.</p>
-              <p>A mediano plazo quiero especializarme en <span class="hl">ingeniería de sonido</span>. Mientras tanto, manejo el Instagram profesional de mi mamá, que es actriz en ascenso.</p>
-              <p class="hl" style="margin-top:8px;">[Aquí puedes agregar 1 o 2 párrafos más personales: qué te enamoró del audiovisual, una anécdota del set, qué te gustaría hacer en 5 años, etc.]</p>
-              <em class="signature">— fabi</em>
-            </div>
-
-            <div class="sticker-list">
-              <span class="sticker" style="background:var(--amber);">Iluminación</span>
-              <span class="sticker" style="background:var(--sage);">Sonido en set</span>
-              <span class="sticker" style="background:var(--lemon);">Script supervisor</span>
-              <span class="sticker" style="background:var(--orange); color:var(--cream);">Asistencia de dirección</span>
-              <span class="sticker" style="background:var(--terracotta); color:var(--cream);">Edición de sonido</span>
-              <span class="sticker" style="background:var(--olive); color:var(--cream);">Contenido y locución</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- HERRAMIENTAS -->
-    <section id="herramientas">
-      <div class="sec-head">
-        <span class="kicker">lo que uso</span>
-        <h2>herramientas</h2>
-      </div>
-      <div class="sticker-sheet">
-        <div class="tool-sticker" style="background:var(--amber);">Premiere<span class="lvl">avanzado</span></div>
-        <div class="tool-sticker" style="background:var(--sage);">Audition<span class="lvl">avanzado</span></div>
-        <div class="tool-sticker" style="background:var(--lemon);">Pro Tools<span class="lvl">aprendiendo</span></div>
-        <div class="tool-sticker" style="background:var(--orange); color:var(--cream);">CapCut<span class="lvl">fluido</span></div>
-        <div class="tool-sticker" style="background:var(--terracotta); color:var(--cream);">Illustrator<span class="lvl">básico</span></div>
-        <div class="tool-sticker" style="background:var(--olive); color:var(--cream);">Photoshop<span class="lvl">en práctica</span></div>
-      </div>
-    </section>
-
-    <!-- CONTACTO -->
-    <div id="contacto-block">
-      <h2>hablemos</h2>
-      <p class="lead">Estoy abierta a colaborar en producción, set y postproducción de sonido. Escríbeme.</p>
-      <div class="contact-links">
-        <!-- 👇 REEMPLAZA con tu correo real -->
-        <a href="mailto:tu-correo@ejemplo.com">✉️ Correo</a>
-        <!-- 👇 REEMPLAZA con tu URL de Instagram -->
-        <a href="https://instagram.com/tu-usuario" target="_blank" rel="noopener">📷 Instagram</a>
-        <!-- 👇 REEMPLAZA con tu URL de LinkedIn -->
-        <a href="https://linkedin.com/in/tu-usuario" target="_blank" rel="noopener">💼 LinkedIn</a>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer>fabi — portafolio <span id="year"></span></footer>
-
-<!-- ============ MODAL ============ -->
-<div class="modal-overlay" id="modal-overlay">
-  <div class="modal-box" role="dialog" aria-modal="true">
-    <button class="modal-close" id="modal-close" aria-label="Cerrar">✕</button>
-    <div id="modal-content"></div>
-  </div>
-</div>
-
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
   /* ================================================
      ROUTER POR HASH
-     vistas: inicio · ramas · sobremi
-     contacto → sobremi + scroll a #contacto-block
-     anclas dentro de ramas: audiovisual, marketing, diseno
   ================================================ */
   const views = ['inicio', 'ramas', 'sobremi'];
   const inViewAnchors = {
@@ -862,7 +21,6 @@
 
   function handleRoute(){
     let hash = window.location.hash.replace('#', '') || 'inicio';
-
     if (hash === 'contacto'){
       showView('sobremi');
       window.scrollTo({top: 0, behavior: 'instant'});
@@ -871,13 +29,11 @@
       }, 120);
       return;
     }
-
     if (views.includes(hash)){
       showView(hash);
       window.scrollTo({top: 0, behavior: 'instant'});
       return;
     }
-
     if (inViewAnchors[hash]){
       const view = inViewAnchors[hash];
       showView(view);
@@ -886,15 +42,11 @@
       }, 120);
       return;
     }
-
-    // fallback
     showView('inicio');
   }
-
   window.addEventListener('hashchange', handleRoute);
   document.addEventListener('DOMContentLoaded', handleRoute);
 
-  // Si hacen click al mismo link del nav, hacemos scroll arriba
   document.querySelectorAll('nav .links a').forEach(a => {
     a.addEventListener('click', () => {
       const target = a.getAttribute('href');
@@ -905,8 +57,7 @@
   });
 
   /* ================================================
-     DATOS: carpetas y proyectos
-     branch: 'audiovisual' | 'marketing' | 'diseno'
+     DATOS
   ================================================ */
   const categories = [
 
@@ -929,8 +80,8 @@
           icon: '🎞️',
           cover: 'linear-gradient(135deg, #C4512D, #E8752E)',
           description: '[Agrega aquí el nombre real del proyecto y una breve descripción de qué trata.]',
-          role: '[Agrega aquí tu rol dentro de la producción: cámara, sonido, dirección, etc.]',
-          represents: '[Agrega aquí qué significa este proyecto para ti, o cómo te representa como artista.]'
+          role: '[Agrega aquí tu rol dentro de la producción.]',
+          represents: '[Agrega aquí qué significa este proyecto para ti.]'
         }
       ]
     },
@@ -940,12 +91,12 @@
       cover: 'linear-gradient(135deg, #A03A20, #7A1F1F)',
       items: [
         {
-          title: 'Cortometraje — curso de Fotografía',
-          badge: 'Trabajo de curso',
+          title: 'Latidos Distantes',
+          badge: 'Cortometraje · curso de Fotografía',
           badgeColor: '#A03A20',
           icon: '🎬',
           cover: 'linear-gradient(135deg, #A03A20, #7A1F1F)',
-          description: 'Cortometraje realizado para el curso de Fotografía. [Agrega más contexto si lo recuerdas.]',
+          description: 'Cortometraje realizado para el curso de Fotografía. [Agrega aquí un pequeño contexto o tagline de qué trata.]',
           role: 'Actuación y colaboración en el guion.',
           represents: '[¿Qué significó para ti este corto? ¿Qué aprendiste? ¿Te identificas con él?]',
           videoId: 'cHFb4ngh6jg'
@@ -975,6 +126,46 @@
       title: 'Videos Musicales', icon: '🎵',
       cover: 'linear-gradient(135deg, #F2A93B, #E8752E)',
       items: []
+    },
+    {
+      id: 'magazine', branch: 'audiovisual',
+      title: 'Magazine', icon: '📰',
+      cover: 'linear-gradient(135deg, #7A1F1F, #F2A93B)',
+      items: [
+        {
+          title: 'Grimorium',
+          badge: 'Magazine · 2026',
+          badgeColor: '#7A1F1F',
+          icon: '📰',
+          cover: 'linear-gradient(135deg, #7A1F1F, #F2A93B)',
+          description: 'Magazine audiovisual del 2026. [Agrega aquí una breve descripción: concepto, temática, formato, cantidad de secciones, etc.]',
+          role: '[Agrega aquí tu rol dentro del magazine: dirección, edición, producción, cámara...]',
+          represents: '[¿Qué significa Grimorium para ti? ¿Por qué elegiste ese nombre o temática?]',
+          videoId: '0t4QqjJF6zE'
+        }
+      ]
+    },
+    {
+      id: 'podcast', branch: 'audiovisual',
+      title: 'Podcast', icon: '🎙️',
+      cover: 'linear-gradient(135deg, #6B7A3A, #C4512D)',
+      items: [
+        {
+          title: '[Nombre del podcast]',
+          badge: 'Edición & supervisión',
+          badgeColor: '#6B7A3A',
+          icon: '🎙️',
+          cover: 'linear-gradient(135deg, #6B7A3A, #C4512D)',
+          description: 'Podcast de tres episodios. Estuve a cargo del área de edición del proyecto completo: edité uno de los episodios y supervisé y aprobé la edición final de los otros dos antes de su publicación.',
+          role: 'Edición de audio del episodio [X], y supervisión + aprobación de la edición final de los 3 episodios.',
+          represents: '[¿Qué significó para ti estar a cargo del sonido y aprobar el trabajo de otros? ¿Aprendiste algo nuevo?]',
+          // 👇 Pega el ID del show (los 3 episodios)
+          // URL tipo: https://open.spotify.com/show/ABC123 → spotifyShowId: 'ABC123'
+          spotifyShowId: 'PEGA_AQUI_EL_ID_DEL_SHOW'
+          // Si algún día prefieres mostrar solo tu episodio, comenta la línea de arriba y descomenta esta:
+          // spotifyEpisodeId: 'PEGA_AQUI_EL_ID_DEL_EPISODIO'
+        }
+      ]
     },
     {
       id: 'eventos', branch: 'audiovisual',
@@ -1075,7 +266,6 @@
   renderFolders('marketing', 'grid-marketing');
   renderFolders('diseno', 'grid-diseno');
 
-  // Actualizar contadores de ramas dinámicamente
   function updateBranchCounts(){
     ['audiovisual','marketing','diseno'].forEach(branch => {
       const count = categories.filter(c => c.branch === branch).length;
@@ -1139,15 +329,35 @@
 
   function openItem(category, index){
     const item = category.items[index];
-    const media = item.videoId
-      ? `<div class="detail-media detail-video-wrap">
-           <iframe src="https://www.youtube.com/embed/${item.videoId}" title="${item.title}"
-             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-             allowfullscreen></iframe>
-         </div>`
-      : item.image
-        ? `<div class="detail-media"><img src="${item.image}" alt="${item.title}" style="width:100%; display:block;"></div>`
-        : `<div class="detail-media detail-cover-static" style="background:${item.cover};">${item.icon}</div>`;
+    let media;
+
+    if (item.videoId){
+      media = `<div class="detail-media detail-video-wrap">
+        <iframe src="https://www.youtube.com/embed/${item.videoId}" title="${item.title}"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>`;
+    } else if (item.spotifyShowId){
+      media = `<div class="detail-media" style="border-radius:12px; overflow:hidden;">
+        <iframe style="width:100%; display:block; border:0;"
+          src="https://open.spotify.com/embed/show/${item.spotifyShowId}?utm_source=generator"
+          height="352" frameBorder="0" allowfullscreen=""
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy" title="${item.title}"></iframe>
+      </div>`;
+    } else if (item.spotifyEpisodeId){
+      media = `<div class="detail-media" style="border-radius:12px; overflow:hidden;">
+        <iframe style="width:100%; display:block; border:0;"
+          src="https://open.spotify.com/embed/episode/${item.spotifyEpisodeId}?utm_source=generator"
+          height="152" frameBorder="0" allowfullscreen=""
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy" title="${item.title}"></iframe>
+      </div>`;
+    } else if (item.image){
+      media = `<div class="detail-media"><img src="${item.image}" alt="${item.title}" style="width:100%; display:block;"></div>`;
+    } else {
+      media = `<div class="detail-media detail-cover-static" style="background:${item.cover};">${item.icon}</div>`;
+    }
 
     modalContent.innerHTML = `
       <button class="modal-back" id="modal-back">← volver a ${category.title}</button>
@@ -1161,6 +371,3 @@
     document.getElementById('modal-back').addEventListener('click', () => openCategory(category.id));
   }
 </script>
-
-</body>
-</html>
