@@ -455,6 +455,23 @@
     border-radius: 4px;
   }
 
+  /* Botón fallback de Spotify */
+  .spotify-fallback-btn{
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 20px;
+    font-size: 13.5px; font-weight: 600;
+    color: var(--terracotta);
+    border: 1.5px solid var(--terracotta);
+    padding: 9px 18px; border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    background: transparent;
+  }
+  .spotify-fallback-btn:hover{
+    background: var(--terracotta);
+    color: var(--cream);
+  }
+
   /* ---------- Sobre mí ---------- */
   #sobremi-bio{
     max-width: 1000px;
@@ -988,10 +1005,12 @@
           badgeColor: '#6B7A3A',
           icon: '🎙️',
           cover: 'linear-gradient(135deg, #6B7A3A, #C4512D)',
-          description: 'Podcast de tres episodios que forma parte del universo transmedia que construimos alrededor de la miniserie Demogracia, junto al colectivo NORU. Yo edité el segundo episodio y quedé a cargo de la supervisión y aprobación final de la edición de los tres capítulos antes de su publicación.',
+          description: 'Podcast de tres episodios que forma parte del universo transmedia que construimos alrededor de la miniserie Demogracia, junto al colectivo NORU. Yo edité el segundo episodio y quedé a cargo de la supervisión y aprobación final de la edición de los tres capítulos antes de su publicación. Aquí abajo puedes escuchar el episodio 2; para los otros dos, usa el botón.',
           role: 'Edición de audio del episodio 2 y supervisión + aprobación de la edición final de los 3 episodios.',
           represents: 'Este podcast me dio mi primer rol de liderazgo real en sonido: no solo edité mi propio episodio, sino que aprobé el trabajo de edición de los demás antes de publicar. Me representó mucho porque entendí que la supervisión también es creación — es cuidar que todo el universo suene coherente, no solo que cada capítulo se escuche bien.',
-          spotifyShowId: '033z8SlZwPqwydHTXY6V3h'
+          spotifyEpisodeId: '22tR8rfqHv79R49RTFhNhe',
+          externalUrl: 'https://open.spotify.com/show/033z8SlZwPqwydHTXY6V3h',
+          externalLabel: 'Escuchar los 3 episodios en Spotify'
         }
       ]
     },
@@ -1165,22 +1184,30 @@
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen></iframe>
       </div>`;
-    } else if (item.spotifyShowId){
-      media = `<div class="detail-media" style="border-radius:12px; overflow:hidden;">
-        <iframe style="width:100%; display:block; border:0;"
-          src="https://open.spotify.com/embed/show/${item.spotifyShowId}?utm_source=generator"
-          height="352" frameBorder="0" allowfullscreen=""
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy" title="${item.title}"></iframe>
-      </div>`;
     } else if (item.spotifyEpisodeId){
-      media = `<div class="detail-media" style="border-radius:12px; overflow:hidden;">
-        <iframe style="width:100%; display:block; border:0;"
-          src="https://open.spotify.com/embed/episode/${item.spotifyEpisodeId}?utm_source=generator"
-          height="152" frameBorder="0" allowfullscreen=""
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy" title="${item.title}"></iframe>
-      </div>`;
+      media = `<div class="detail-media" style="border-radius:12px; overflow:hidden; margin-bottom:14px;">
+          <iframe style="width:100%; display:block; border:0;"
+            src="https://open.spotify.com/embed/episode/${item.spotifyEpisodeId}?utm_source=generator&theme=0"
+            height="152" frameBorder="0" allowfullscreen=""
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            title="${item.title} — episodio"></iframe>
+        </div>
+        ${item.externalUrl ? `
+          <a href="${item.externalUrl}" target="_blank" rel="noopener" class="spotify-fallback-btn">
+            ▶ ${item.externalLabel || 'Escuchar en Spotify'}
+          </a>` : ''}`;
+    } else if (item.spotifyShowId){
+      media = `<div class="detail-media" style="border-radius:12px; overflow:hidden; margin-bottom:14px;">
+          <iframe style="width:100%; display:block; border:0;"
+            src="https://open.spotify.com/embed/show/${item.spotifyShowId}?utm_source=generator&theme=0"
+            height="352" frameBorder="0" allowfullscreen=""
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            title="${item.title}"></iframe>
+        </div>
+        ${item.externalUrl ? `
+          <a href="${item.externalUrl}" target="_blank" rel="noopener" class="spotify-fallback-btn">
+            ▶ ${item.externalLabel || 'Escuchar en Spotify'}
+          </a>` : ''}`;
     } else if (item.image){
       media = `<div class="detail-media"><img src="${item.image}" alt="${item.title}" style="width:100%; display:block;"></div>`;
     } else {
