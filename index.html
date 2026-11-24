@@ -1187,8 +1187,8 @@
     } else if (item.spotifyEpisodeId){
       media = `<div class="detail-media" style="border-radius:12px; overflow:hidden; margin-bottom:14px;">
           <iframe style="width:100%; display:block; border:0;"
-            src="https://open.spotify.com/embed/episode/${item.spotifyEpisodeId}?utm_source=generator&theme=0"
-            height="152" frameBorder="0" allowfullscreen=""
+            src="https://open.spotify.com/embed/episode/${item.spotifyEpisodeId}"
+            height="232" frameBorder="0" allowfullscreen=""
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             title="${item.title} — episodio"></iframe>
         </div>
@@ -1199,7 +1199,7 @@
     } else if (item.spotifyShowId){
       media = `<div class="detail-media" style="border-radius:12px; overflow:hidden; margin-bottom:14px;">
           <iframe style="width:100%; display:block; border:0;"
-            src="https://open.spotify.com/embed/show/${item.spotifyShowId}?utm_source=generator&theme=0"
+            src="https://open.spotify.com/embed/show/${item.spotifyShowId}"
             height="352" frameBorder="0" allowfullscreen=""
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             title="${item.title}"></iframe>
