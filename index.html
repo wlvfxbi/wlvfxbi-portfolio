@@ -73,15 +73,22 @@
     font-size: 24px;
     color: var(--cream);
     letter-spacing: -0.03em;
+    background: none;
+    border: none;
+    padding: 0;
   }
   nav .logo span{ color: var(--amber); }
   nav .links{ display: flex; gap: 4px; font-size: 13.5px; font-weight: 500; }
-  nav .links a{
+  nav .links button{
     padding: 7px 14px; border-radius: 100px;
     color: rgba(251, 243, 228, 0.75);
     transition: all 0.2s;
+    background: transparent;
+    border: none;
+    font-size: 13.5px;
+    font-weight: 500;
   }
-  nav .links a:hover{ background: rgba(242, 169, 59, 0.15); color: var(--cream); }
+  nav .links button:hover{ background: rgba(242, 169, 59, 0.15); color: var(--cream); }
 
   /* ---------- Views ---------- */
   .view{ display: none; position: relative; z-index: 2; }
@@ -175,6 +182,7 @@
     box-shadow: 0 10px 28px rgba(232, 117, 46, 0.42);
     transition: all 0.3s ease;
     margin-top: 44px;
+    border: none;
   }
   .cta-btn:hover{ transform: translateY(-3px); box-shadow: 0 16px 36px rgba(232, 117, 46, 0.55); }
   .cta-btn .arrow{ font-size: 20px; transition: transform 0.3s; }
@@ -673,11 +681,11 @@
 <body>
 
 <nav>
-  <a href="#inicio" class="logo">fabi<span>.</span></a>
+  <button onclick="irA('inicio')" class="logo">fabi<span>.</span></button>
   <div class="links">
-    <a href="#ramas">ramas</a>
-    <a href="#sobremi">sobre mí</a>
-    <a href="#contacto">contacto</a>
+    <button onclick="irA('ramas')">ramas</button>
+    <button onclick="irA('sobremi')">sobre mí</button>
+    <button onclick="irA('contacto')">contacto</button>
   </div>
 </nav>
 
@@ -693,9 +701,9 @@
         Estudiante de <em>Comunicación y Medios Audiovisuales</em> en la UPN.
         Entre el <b>set</b>, la <b>sala de edición</b> y las <b>redes</b>.
       </p>
-      <a href="#ramas" class="cta-btn">
+      <button onclick="irA('ramas')" class="cta-btn">
         empezar <span class="arrow">→</span>
-      </a>
+      </button>
     </div>
   </section>
 
@@ -708,30 +716,30 @@
     </div>
 
     <div class="branches">
-      <a href="#audiovisual" class="branch-card">
+      <button onclick="irA('audiovisual')" class="branch-card">
         <div class="branch-icon" style="background:linear-gradient(135deg,var(--terracotta),var(--wine));">🎬</div>
         <h3>Audiovisual</h3>
         <p>Producción en set, sonido, edición y postproducción. Mi rama principal.</p>
         <span class="branch-meta" id="count-audiovisual">06 carpetas</span>
-      </a>
-      <a href="#transmedia" class="branch-card">
+      </button>
+      <button onclick="irA('transmedia')" class="branch-card">
         <div class="branch-icon" style="background:linear-gradient(135deg,var(--wine),var(--amber));">🌌</div>
         <h3>Transmedia</h3>
         <p>Universos que se expanden en múltiples formatos: series, podcasts, webs, cómics.</p>
         <span class="branch-meta" id="count-transmedia">03 carpetas</span>
-      </a>
-      <a href="#marketing" class="branch-card">
+      </button>
+      <button onclick="irA('marketing')" class="branch-card">
         <div class="branch-icon" style="background:linear-gradient(135deg,var(--olive),var(--sage));">📱</div>
         <h3>Marketing & Redes</h3>
         <p>Creación de contenido, manejo de redes y campañas publicitarias.</p>
         <span class="branch-meta" id="count-marketing">02 carpetas</span>
-      </a>
-      <a href="#diseno" class="branch-card">
+      </button>
+      <button onclick="irA('diseno')" class="branch-card">
         <div class="branch-icon" style="background:linear-gradient(135deg,var(--amber),var(--lemon)); color:var(--ink);">🎨</div>
         <h3>Diseño</h3>
         <p>Afiches, posters y diseño gráfico para redes. En crecimiento.</p>
         <span class="branch-meta" id="count-diseno">02 carpetas</span>
-      </a>
+      </button>
     </div>
 
     <!-- AUDIOVISUAL -->
@@ -739,4 +747,10 @@
       <div class="sec-head">
         <span class="kicker">rama 01</span>
         <h2>audiovisual</h2>
-        <p class="lead">Set, cámara
+        <p class="lead">Set, cámara, sonido, edición. Lo que más hago y lo que más me representa.</p>
+      </div>
+      <div class="folder-grid" id="grid-audiovisual"></div>
+    </section>
+
+    <!-- TRANSMEDIA -->
+    <section id="transmedia" class="branch-block
